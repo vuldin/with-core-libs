@@ -1,0 +1,7 @@
+svg {
+  @apply overflow-visible block w-80 h-80
+}
+
+button {
+  @apply w-24 border border-solid border-black mx-auto mt-0 mb-1
+}

@@ -1,0 +1,3 @@
+.pie-chart {
+  @apply p-4 bg-white shadow rounded mb-8;
+}
