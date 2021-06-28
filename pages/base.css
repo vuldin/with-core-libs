@@ -7,5 +7,5 @@ svg {
 }
 
 .chart {
-  @apply bg-white;
+  @apply bg-white dark:bg-gray-900;
 }

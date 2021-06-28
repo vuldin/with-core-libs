@@ -8,7 +8,7 @@ export default function Home() {
   const randomize = useSetRecoilState(randomizeCount)
 
   return (
-    <div className="min-h-screen bg-gray-200">
+    <div className="min-h-screen bg-gray-200 dark:bg-gray-800 dark:text-gray-100">
       <Head>
         <title>Dashboard</title>
         <link rel="icon" href="/favicon.ico" />
@@ -16,7 +16,7 @@ export default function Home() {
 
       <button onClick={randomize}>Randomize</button>
       <main className="grid grid-cols-1 gap-4 p-2 md:grid-cols-2">
-        <section aria-labelledby="tempo-title" className="p-2 bg-white rounded">
+        <section aria-labelledby="tempo-title" className="p-2 bg-white rounded dark:bg-gray-900">
           <h2 className="section-title" id="tempo-title">
             Tempo
           </h2>
@@ -25,7 +25,10 @@ export default function Home() {
             <PieChart title="Deployment Frequency" state={countState} scheme={schemeBlues} />
           </div>
         </section>
-        <section aria-labelledby="stability-title" className="p-2 bg-white rounded">
+        <section
+          aria-labelledby="stability-title"
+          className="p-2 bg-white rounded dark:bg-gray-900"
+        >
           <h2 className="section-title" id="stability-title">
             Stability
           </h2>
