@@ -1,7 +1,11 @@
 svg {
-  @apply overflow-visible block w-80 h-80
+  @apply overflow-visible w-full h-full
 }
 
-button {
-  @apply w-24 border border-solid border-black mx-auto mt-0 mb-1
+.section-title {
+  @apply text-xl font-medium;
+}
+
+.chart {
+  @apply bg-white;
 }
