@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
 import { arc, interpolate, pie, scaleOrdinal, schemeOranges, select } from 'd3'
+import { useEffect, useRef } from 'react'
 import { useRecoilValue } from 'recoil'
+
 import useResizeObserver from '../lib/useResizeObserver'
 
 export default function PieChart({ title, state, scheme = schemeOranges }) {

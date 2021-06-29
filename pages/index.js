@@ -1,8 +1,10 @@
 import Head from 'next/head'
-import { schemeOranges, schemeBlues, schemeGreens, schemePurples } from 'd3'
+import { schemeBlues, schemeGreens, schemeOranges, schemePurples } from 'd3'
 import { useSetRecoilState } from 'recoil'
-import { countState, randomizeCount } from '../lib/recoilAtoms'
+
+import BarChart from '../components/BarChart'
 import PieChart from '../components/PieChart'
+import { countState, randomizeCount } from '../lib/recoilAtoms'
 
 export default function Home() {
   const randomize = useSetRecoilState(randomizeCount)
@@ -22,7 +24,7 @@ export default function Home() {
           </h2>
           <div className="grid gap-8">
             <PieChart title="Delivery Lead Time" state={countState} scheme={schemeOranges} />
-            <PieChart title="Deployment Frequency" state={countState} scheme={schemeBlues} />
+            <BarChart title="Deployment Frequency" state={countState} scheme={schemeBlues} />
           </div>
         </section>
         <section
