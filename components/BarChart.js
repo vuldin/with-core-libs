@@ -12,8 +12,8 @@ export default function BarChart({ title, state, scheme = schemeBlues }) {
   const svgRef = useRef()
   const wrapperRef = useRef()
   const dimensions = useResizeObserver(wrapperRef)
-  // TODO add right margin for legend
-  const margin = { left: 32, bottom: 24 }
+  // TODO add right padding for legend
+  const padding = { left: 32, bottom: 24 }
 
   useEffect(() => {
     if (!dimensions) return
@@ -21,27 +21,17 @@ export default function BarChart({ title, state, scheme = schemeBlues }) {
     const svg = select(svgRef.current)
     const xScale = scaleBand()
       .domain(data.map((_, index) => index))
-      .range([0, dimensions.width - margin.left])
+      .range([0, dimensions.width - padding.left])
       .padding(0.5)
 
     const yScale = scaleLinear()
-      .domain([0, 150])
-      .range([dimensions.height - margin.bottom, 0])
+      .domain([0, Math.max(...data)])
+      .range([dimensions.height - padding.bottom, 0])
 
     const colorScale = scaleLinear()
       .domain([75, 100, 150])
       .range(['green', 'orange', 'red'])
       .clamp(true)
-
-    const xAxis = axisBottom(xScale).ticks(data.length)
-
-    svg
-      .select('.x-axis')
-      .style('transform', `translate(${margin.left}px, ${dimensions.height - margin.bottom}px)`)
-      .call(xAxis)
-
-    const yAxis = axisLeft(yScale)
-    svg.select('.y-axis').style('transform', `translateX(${margin.left}px)`).call(yAxis)
 
     const svgStyles = {
       height: `${dimensions.width}px`,
@@ -55,22 +45,31 @@ export default function BarChart({ title, state, scheme = schemeBlues }) {
       .join('rect')
       .attr('class', 'bar')
       .style('transform', 'scale(1, -1)')
-      .attr('x', (_, index) => xScale(index) + margin.left)
-      .attr('y', -dimensions.height + margin.bottom)
+      .attr('x', (_, index) => xScale(index) + padding.left)
+      .attr('y', -dimensions.height + padding.bottom)
       .attr('width', xScale.bandwidth())
       .transition()
       .attr('fill', colorScale)
-      .attr('height', (value) => dimensions.height - margin.bottom - yScale(value))
+      .attr('height', (value) => dimensions.height - padding.bottom - yScale(value))
+
+    const xAxis = axisBottom(xScale).ticks(data.length)
+    let xAxisGroup = select('.x-axis')
+    if (!xAxisGroup['_groups'][0][0]) xAxisGroup = svg.append('g').attr('class', 'x-axis')
+    xAxisGroup
+      .style('transform', `translate(${padding.left}px, ${dimensions.height - padding.bottom}px)`)
+      .call(xAxis)
+
+    const yAxis = axisLeft(yScale)
+    let yAxisGroup = select('.y-axis')
+    if (!yAxisGroup['_groups'][0][0]) yAxisGroup = svg.append('g').attr('class', 'y-axis')
+    yAxisGroup.style('transform', `translateX(${padding.left}px)`).call(yAxis)
   }, [data, dimensions])
 
   return (
     <div className="grid gap-2">
       {title && <h3 className="text-lg font-medium text-center">{title}</h3>}
       <div ref={wrapperRef} className="chart bar-chart">
-        <svg ref={svgRef}>
-          <g className="x-axis" />
-          <g className="y-axis" />
-        </svg>
+        <svg ref={svgRef}></svg>
       </div>
     </div>
   )
