@@ -3,6 +3,7 @@ import { schemeBlues, schemeGreens, schemeOranges, schemePurples } from 'd3'
 import { useSetRecoilState } from 'recoil'
 
 import BarChart from '../components/BarChart'
+import ChangeFailRateChart from '../components/ChangeFailRateChart'
 import PieChart from '../components/PieChart'
 import { countState, randomizeCount } from '../lib/recoilAtoms'
 
@@ -23,8 +24,17 @@ export default function Home() {
             Tempo
           </h2>
           <div className="grid gap-8">
-            <PieChart title="Delivery Lead Time" state={countState} scheme={schemeOranges} />
-            <BarChart title="Deployment Frequency" state={countState} scheme={schemeBlues} />
+            <PieChart
+              title="Delivery Lead Time"
+              state={countState}
+              options={{ title: 'Delivery Lead Time', color: 'orange' }}
+              scheme={schemeOranges}
+            />
+            <BarChart
+              state={countState}
+              options={{ title: 'Delivery Lead Time', color: 'blue' }}
+              scheme={schemeBlues}
+            />
           </div>
         </section>
         <section
@@ -36,7 +46,7 @@ export default function Home() {
           </h2>
           <div className="grid gap-8">
             <PieChart title="Mean Time to Restore" state={countState} scheme={schemePurples} />
-            <PieChart title="Change Fail Rate" state={countState} scheme={schemeGreens} />
+            <ChangeFailRateChart title="Change Fail Rate" state={countState} />
           </div>
         </section>
       </main>
